@@ -30,7 +30,7 @@ pipeline {
                 echo '🚀 Running container to verify build...'
                 script {
                     sh '''
-                    docker run -d -p 5002:5001 --name temp-${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker run -d -p 5005:5001 --name temp-${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
                     sleep 5
                     docker ps
                     docker stop temp-${IMAGE_NAME}
