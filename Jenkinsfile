@@ -26,19 +26,21 @@ pipeline {
         }
 
         stage('Run Container (Test)') {
-            steps {
-                echo '🚀 Running container to verify build...'
-                script {
-                    sh '''
-                    docker run -d -p 5005:5001 --name temp-${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                    sleep 5
-                    docker ps
-                    docker stop temp-${IMAGE_NAME}
-                    docker rm temp-${IMAGE_NAME}
-                    '''
-                }
-            }
+    steps {
+        echo '🚀 Running container to verify build...'
+        script {
+            sh '''
+            docker stop temp-${IMAGE_NAME} || true
+            docker rm temp-${IMAGE_NAME} || true
+            docker run -d -p 5005:5001 --name temp-${IMAGE_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+            sleep 5
+            docker ps
+            docker stop temp-${IMAGE_NAME}
+            docker rm temp-${IMAGE_NAME}
+            '''
         }
+    }
+}
 
         stage('Push to Docker Hub') {
             steps {
