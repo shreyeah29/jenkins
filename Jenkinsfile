@@ -19,7 +19,8 @@ pipeline {
             steps {
                 echo '🐳 Building Docker image...'
                 script {
-                    sh 'docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME}:latest .'
+                    sh 'docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME}:latest -f app/Dockerfile ./app'
+
                 }
             }
         }
